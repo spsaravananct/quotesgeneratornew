@@ -21,16 +21,20 @@ const QuoteCard = () => {
     setError(null);
 
     try {
-      const response = await fetch("https://api.quotable.io/random");
+      const response = await fetch(
+        "https://api.breakingbadquotes.xyz/v1/quotes",
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch quote");
       }
 
       const data = await response.json();
+      // The API returns an array with a single quote object
+      const quoteData = data[0];
       setQuote({
-        content: data.content,
-        author: data.author,
+        content: quoteData.quote,
+        author: quoteData.author,
       });
     } catch (err) {
       setError("Failed to load quote. Try again!");
